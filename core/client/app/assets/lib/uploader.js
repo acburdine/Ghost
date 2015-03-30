@@ -80,6 +80,8 @@ UploadUi = function ($dropzone, settings) {
                         });
                 },
                 dropZone: settings.fileStorage ? $dropzone : null,
+                // Disable pasting events on this element
+                pasteZone: null,
                 progressall: function (e, data) {
                     /*jshint unused:false*/
                     var progress = parseInt(data.loaded / data.total * 100, 10);

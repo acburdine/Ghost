@@ -30,6 +30,11 @@ upload = {
             return Promise.reject(new errors.NoPermissionError('Please select an image.'));
         }
 
+        // The image may not always contain a filename, in case of a paste of example
+        if (options.uploadimage.name === 'undefined') {
+            options.uploadimage.name = 'paste.png';
+        }
+
         // Check if the file is valid
         if (!utils.checkFileIsValid(options.uploadimage, config.uploads.contentTypes, config.uploads.extensions)) {
             return Promise.reject(new errors.UnsupportedMediaTypeError('Please select a valid image.'));
