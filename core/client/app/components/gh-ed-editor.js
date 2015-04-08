@@ -68,7 +68,6 @@ export default Ember.TextArea.extend(EditorAPI, EditorShortcuts, EditorScroll, {
                 'image/svg+xml': 'svg'
             },
             latestUpload;
-
         fileUpload.fileupload('option', {
             url: Ghost.apiRoot + '/uploads/',
             pasteZone: this.$(),
@@ -108,6 +107,8 @@ export default Ember.TextArea.extend(EditorAPI, EditorShortcuts, EditorScroll, {
 
                 if (result) {
                     filename = result.substring(result.lastIndexOf('/') + 1);
+                }
+
                 }
 
                 latestUpload.complete(result);
