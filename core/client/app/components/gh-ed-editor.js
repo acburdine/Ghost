@@ -54,7 +54,6 @@ export default Ember.TextArea.extend(EditorAPI, EditorShortcuts, EditorScroll, {
      * Binds the paste and drop events on the editor
      */
     attachFileHandler: function() {
-
         var self = this;
 
         this.$().fileupload().fileupload('option', {
@@ -63,7 +62,6 @@ export default Ember.TextArea.extend(EditorAPI, EditorShortcuts, EditorScroll, {
             dropZone: this.$(),
             paramName: 'uploadimage',
             add: function(e, data) {
-                console.log('add', data, e);
                 data.submit();
             },
             paste: function(e, data) {
@@ -71,10 +69,17 @@ export default Ember.TextArea.extend(EditorAPI, EditorShortcuts, EditorScroll, {
                 e.preventDefault();
             },
             done: function(e, data) {
+                var filename = "image",
+                    result = data.result;
+
+                if (result) {
+                    filename = result.substring(result.lastIndexOf('/') + 1);
+                }
+
                 var selection = self.getSelection();
-                self.replaceSelection('![image](' + data.result + ')', selection.start, selection.end, 'collapseToEnd');
+                self.replaceSelection('![' + filename + '](' + result + ')', selection.start, selection.end, 'collapseToEnd');
             }
-        })
+        });
     }.on('didInsertElement'),
 
     /**
