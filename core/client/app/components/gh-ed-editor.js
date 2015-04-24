@@ -3,6 +3,7 @@ import EditorAPI from 'ghost/mixins/ed-editor-api';
 import EditorShortcuts from 'ghost/mixins/ed-editor-shortcuts';
 import EditorScroll from 'ghost/mixins/ed-editor-scroll';
 import ghostPaths from 'ghost/utils/ghost-paths';
+import UploadUi from 'ghost/assets/lib/upload-ui';
 
 export default Ember.TextArea.extend(EditorAPI, EditorShortcuts, EditorScroll, {
     focus: false,
@@ -54,21 +55,33 @@ export default Ember.TextArea.extend(EditorAPI, EditorShortcuts, EditorScroll, {
      * Binds the paste and drop events on the editor
      */
     attachFileHandler: function() {
-        var self = this;
+        var self = this,
+            fileUpload = this.$().fileupload(),
+            dropSettings = {
+                progressbar: true,
+                editor: false
+            },
+            latestUpload;
 
-        this.$().fileupload().fileupload('option', {
+        fileUpload.fileupload('option', {
             url: Ghost.apiRoot + '/uploads/',
             pasteZone: this.$(),
             dropZone: this.$(),
             paramName: 'uploadimage',
-            add: function(e, data) {
-                data.submit();
+            add: function (e, data) {
+                var selection = self.getSelection();
+                self.replaceSelection('![uploading...]()', selection.start, selection.end, 'collapseToEnd');
+                latestUpload = new UploadUi($(".js-drop-zone:contains('uploading...')"), dropSettings);
+                latestUpload.initProgress(data);
             },
-            paste: function(e, data) {
+            paste: function (e, data) {
                 self.$().fileupload('add', {files: data.files});
                 e.preventDefault();
             },
-            done: function(e, data) {
+            progressall: function (e, data) {
+                latestUpload.setProgress(data);
+            },
+            done: function (e, data) {
                 var filename = "image",
                     result = data.result;
 
@@ -76,8 +89,8 @@ export default Ember.TextArea.extend(EditorAPI, EditorShortcuts, EditorScroll, {
                     filename = result.substring(result.lastIndexOf('/') + 1);
                 }
 
-                var selection = self.getSelection();
-                self.replaceSelection('![' + filename + '](' + result + ')', selection.start, selection.end, 'collapseToEnd');
+                latestUpload.complete(result);
+                self.set('value', self.get('value').replace('![uploading...]', '![' + filename + ']'));
             }
         });
     }.on('didInsertElement'),
