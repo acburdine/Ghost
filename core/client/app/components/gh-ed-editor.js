@@ -61,6 +61,12 @@ export default Ember.TextArea.extend(EditorAPI, EditorShortcuts, EditorScroll, {
                 progressbar: true,
                 editor: false
             },
+            mimeTypes = {
+                'image/jpeg': 'jpg',
+                'image/png': 'png',
+                'image/gif': 'gif',
+                'image/svg+xml': 'svg'
+            },
             latestUpload;
 
         fileUpload.fileupload('option', {
@@ -74,9 +80,24 @@ export default Ember.TextArea.extend(EditorAPI, EditorShortcuts, EditorScroll, {
                 latestUpload = new UploadUi($(".js-drop-zone:contains('uploading...')"), dropSettings);
                 latestUpload.initProgress(data);
             },
+            submit: function(e, data) {
+                var ext = '.jpg',
+                    file = data.files[0];
+
+                if (file.type && mimeTypes[file.type]) {
+                    ext =  mimeTypes[file.type];
+                }
+
+                data.formData = {
+                    filename: 'paste.' + ext
+                };
+            },
             paste: function (e, data) {
                 self.$().fileupload('add', {files: data.files});
                 e.preventDefault();
+            },
+            fail: function (e, data) {
+                latestUpload.setError(data);
             },
             progressall: function (e, data) {
                 latestUpload.setProgress(data);
