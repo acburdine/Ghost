@@ -109,8 +109,8 @@ export default Ember.TextArea.extend(EditorAPI, EditorShortcuts, EditorScroll, {
                     filename = result.substring(result.lastIndexOf('/') + 1);
                 }
 
-                }
-
+                latestUpload.complete(result);
+                self.set('value', self.get('value').replace('![uploading...]', '![' + filename + ']'));
                 latestUpload.complete(result);
                 self.set('value', self.get('value').replace('![uploading...]', '![' + filename + ']'));
             }

@@ -4,8 +4,6 @@ import UploadUi from 'ghost/assets/lib/upload-ui';
 var upload,
     Ghost = ghostPaths();
 
-                    $dropzone.trigger('uploadsuccess', [result]);
-                $dropzone.find('div.description').hide();
 upload = function (options) {
     var settings = $.extend({
         progressbar: true,
