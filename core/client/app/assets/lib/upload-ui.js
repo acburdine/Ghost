@@ -5,7 +5,7 @@ var UploadUi,
 
 UploadUi = function ($dropzone, settings) {
     var $url = '<div class="js-url"><input class="url js-upload-url" type="url" placeholder="http://"/></div>',
-        $cancel = '<a class="image-cancel js-cancel" title="Delete"><span class="hidden">Delete</span></a>',
+        $cancel = '<a class="image-cancel icon-trash js-cancel" title="Delete"><span class="hidden">Delete</span></a>',
         $progress =  $('<div />', {
             class: 'js-upload-progress progress progress-success active',
             role: 'progressbar',
@@ -79,7 +79,7 @@ UploadUi = function ($dropzone, settings) {
             var progress = parseInt(data.loaded / data.total * 100, 10);
             /*jshint unused:false*/
             if (!settings.editor) {
-                $progress.find('div.js-progress').css({position: 'absolute', top: '40px'}); 
+                $progress.find('div.js-progress').css({position: 'absolute', top: '40px'});
             }
             if (settings.progressbar) {
                 $dropzone.trigger('uploadprogress', [progress, data]);
