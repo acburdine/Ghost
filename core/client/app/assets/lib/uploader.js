@@ -1,8 +1,6 @@
-import ghostPaths from 'ghost/utils/ghost-paths';
 import UploadUi from 'ghost/assets/lib/upload-ui';
 
-var upload,
-    Ghost = ghostPaths();
+var upload;
 
 upload = function (options) {
     var settings = $.extend({

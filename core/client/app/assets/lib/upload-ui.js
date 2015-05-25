@@ -88,6 +88,7 @@ UploadUi = function ($dropzone, settings) {
         },
 
         setError: function(data) {
+            var self = this;
             /*jshint unused:false*/
             $('.js-button-accept').prop('disabled', false);
             $dropzone.trigger('uploadfailure', [data.result]);
