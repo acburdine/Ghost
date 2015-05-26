@@ -57,7 +57,7 @@ UploadUi = function ($dropzone, settings) {
             preLoadImage();
         },
 
-        initProgress: function(data) {
+        initProgress: function (data) {
             /*jshint unused:false*/
             $('.js-button-accept').prop('disabled', true);
             $dropzone.find('.js-fileupload').removeClass('right');
@@ -75,7 +75,7 @@ UploadUi = function ($dropzone, settings) {
                 });
         },
 
-        setProgress: function(data) {
+        setProgress: function (data) {
             var progress = parseInt(data.loaded / data.total * 100, 10);
             /*jshint unused:false*/
             if (!settings.editor) {
@@ -87,7 +87,7 @@ UploadUi = function ($dropzone, settings) {
             }
         },
 
-        setError: function(data) {
+        setError: function (data) {
             var self = this;
             /*jshint unused:false*/
             $('.js-button-accept').prop('disabled', false);
@@ -149,9 +149,9 @@ UploadUi = function ($dropzone, settings) {
             if (!$dropzone.find('a.image-url')[0]) {
                 $dropzone.append('<a class="image-url" title="Add image from URL"><span class="hidden">URL</span></a>');
             }
-           // if (!$dropzone.find('a.image-webcam')[0]) {
-           //     $dropzone.append('<a class="image-webcam" title="Add image from webcam"><span class="hidden">Webcam</span></a>');
-           // }
+            // if (!$dropzone.find('a.image-webcam')[0]) {
+            //     $dropzone.append('<a class="image-webcam" title="Add image from webcam"><span class="hidden">Webcam</span></a>');
+            // }
         },
 
         removeExtras: function () {

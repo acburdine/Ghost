@@ -10,7 +10,6 @@ upload = function (options) {
     }, options);
 
     return this.each(function () {
-
         var $dropzone = $(this),
             ui;
 
