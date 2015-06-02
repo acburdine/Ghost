@@ -147,7 +147,7 @@ UploadUi = function ($dropzone, settings) {
                 $dropzone.append('<button class="js-fail btn btn-green" style="display: none">Try Again</button>');
             }
             if (!$dropzone.find('a.image-url')[0]) {
-                $dropzone.append('<a class="image-url" title="Add image from URL"><span class="hidden">URL</span></a>');
+                $dropzone.append('<a class="image-url" title="Add image from URL"><i class="icon-link"><span class="hidden">URL</span></i></a>');
             }
             // if (!$dropzone.find('a.image-webcam')[0]) {
             //     $dropzone.append('<a class="image-webcam" title="Add image from webcam"><span class="hidden">Webcam</span></a>');
