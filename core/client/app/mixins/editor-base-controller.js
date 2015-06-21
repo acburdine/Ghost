@@ -265,7 +265,7 @@ export default Ember.Mixin.create({
                 this.set('timedSaveId', null);
             }
 
-            notifications.closePassive();
+            notifications.closeNotifications();
 
             // ensure an incomplete tag is finalised before save
             this.get('postTagsInputController').send('addNewTag');

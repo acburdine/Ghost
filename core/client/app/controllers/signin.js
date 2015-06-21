@@ -31,7 +31,7 @@ export default Ember.Controller.extend(ValidationEngine, {
             $('#login').find('input').trigger('change');
 
             this.validate({format: false}).then(function () {
-                self.get('notifications').closePassive();
+                self.get('notifications').closeNotifications();
                 self.send('authenticate');
             }).catch(function (errors) {
                 self.get('notifications').showErrors(errors);
@@ -44,6 +44,7 @@ export default Ember.Controller.extend(ValidationEngine, {
                 self = this;
 
             if (!email) {
+                // TODO: Switch to in-line validation
                 return notifications.showError('Enter email address to reset password.');
             }
 

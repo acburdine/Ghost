@@ -122,7 +122,7 @@ middleware = {
                         var msg = {
                             type: 'error',
                             message: 'Please Sign In',
-                            status: 'passive'
+                            status: 'alert'
                         };
                         res.status(401);
                         return res.send(msg);
