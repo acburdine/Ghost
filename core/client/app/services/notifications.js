@@ -39,7 +39,7 @@ export default Ember.Service.extend({
         if (!delayed) {
             this.get('content').pushObject(message);
         } else {
-            this.delayedNotifications.pushObject(message);
+            this.get('delayedNotifications').pushObject(message);
         }
     },
 

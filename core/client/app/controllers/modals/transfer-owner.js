@@ -33,6 +33,7 @@ export default Ember.Controller.extend({
                     });
                 }
 
+                // TODO: make decision on alert/notification/remove
                 self.get('notifications').showNotification('Ownership successfully transferred to ' + user.get('name'));
             }).catch(function (error) {
                 self.get('notifications').showAPIError(error);

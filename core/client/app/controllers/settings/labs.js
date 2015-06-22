@@ -54,13 +54,14 @@ export default Ember.Controller.extend(Ember.Evented, {
                 self.store.unloadAll('role');
                 self.store.unloadAll('setting');
                 self.store.unloadAll('notification');
+                // TODO: make decision on alert/notification/remove
                 notifications.showNotification('Import successful.');
             }).catch(function (response) {
                 if (response && response.jqXHR && response.jqXHR.responseJSON && response.jqXHR.responseJSON.errors) {
                     self.set('importErrors', response.jqXHR.responseJSON.errors);
                 }
 
-                notifications.showNotification('Import Failed', {type: 'error'});
+                notifications.showAlert('Import Failed');
             }).finally(function () {
                 self.set('uploadButtonText', 'Import');
                 self.trigger('reset');
@@ -85,7 +86,7 @@ export default Ember.Controller.extend(Ember.Evented, {
             ajax(this.get('ghostPaths.url').api('mail', 'test'), {
                 type: 'POST'
             }).then(function () {
-                notifications.showNotification('Check your email for the test message.');
+                notifications.showAlert('Check your email for the test message.');
             }).catch(function (error) {
                 if (typeof error.jqXHR !== 'undefined') {
                     notifications.showAPIError(error);

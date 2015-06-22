@@ -43,6 +43,7 @@ export default Ember.Controller.extend(ValidationEngine, {
                     }
                 }).then(function (resp) {
                     self.toggleProperty('submitting');
+                    // TODO: make decision on alert/notification/remove
                     self.get('notifications').showNotification(resp.passwordreset[0].message, {delayed: true});
                     self.get('session').authenticate('simple-auth-authenticator:oauth2-password-grant', {
                         identification: self.get('email'),

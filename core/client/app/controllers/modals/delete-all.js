@@ -12,6 +12,7 @@ export default Ember.Controller.extend({
             ajax(this.get('ghostPaths.url').api('db'), {
                 type: 'DELETE'
             }).then(function () {
+                // TODO: make decision on alert/notification/remove
                 self.get('notifications').showNotification('All content deleted from database.');
                 self.store.unloadAll('post');
                 self.store.unloadAll('tag');
