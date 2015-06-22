@@ -75,14 +75,14 @@ export default Ember.Controller.extend({
                     model.destroyRecord().then(function () {
                         var notificationText = 'Invitation revoked. (' + email + ')';
 
-                        self.get('notifications').showSuccess(notificationText, false);
+                        self.get('notifications').showNotification(notificationText);
                     }).catch(function (error) {
                         self.get('notifications').showAPIError(error);
                     });
                 } else {
                     // if the user is no longer marked as "invited", then show a warning and reload the route
                     self.get('target').send('reload');
-                    self.get('notifications').showError('This user has already accepted the invitation.', {delayed: 500});
+                    self.get('notifications').showNotification('This user has already accepted the invitation.', {type: 'error', delayed: 500});
                 }
             });
         },
@@ -95,10 +95,10 @@ export default Ember.Controller.extend({
                 // If sending the invitation email fails, the API will still return a status of 201
                 // but the user's status in the response object will be 'invited-pending'.
                 if (result.users[0].status === 'invited-pending') {
-                    self.get('notifications').showWarn('Invitation email was not sent.  Please try resending.');
+                    self.get('notifications').showNotification('Invitation email was not sent.  Please try resending.', {type: 'warn'});
                 } else {
                     self.get('model').set('status', result.users[0].status);
-                    self.get('notifications').showSuccess(notificationText);
+                    self.get('notifications').showNotification(notificationText);
                 }
             }).catch(function (error) {
                 self.get('notifications').showAPIError(error);
@@ -124,7 +124,7 @@ export default Ember.Controller.extend({
                 var currentPath,
                     newPath;
 
-                self.get('notifications').showSuccess('Settings successfully saved.');
+                self.get('notifications').showNotification('Settings successfully saved.');
 
                 // If the user's slug has changed, change the URL and replace
                 // the history so refresh and back button still work
@@ -159,7 +159,7 @@ export default Ember.Controller.extend({
                         ne2Password: ''
                     });
 
-                    self.get('notifications').showSuccess('Password updated.');
+                    self.get('notifications').showNotification('Password updated.');
 
                     return model;
                 }).catch(function (errors) {
