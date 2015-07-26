@@ -70,7 +70,7 @@ export default Ember.TextArea.extend(EditorAPI, EditorShortcuts, EditorScroll, {
             latestUpload;
 
         fileUpload.fileupload('option', {
-            url: ghostPaths.apiRoot + '/uploads/',
+            url: ghostPaths().apiRoot + '/uploads/',
             pasteZone: this.$(),
             dropZone: this.$(),
             paramName: 'uploadimage',
