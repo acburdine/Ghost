@@ -112,8 +112,6 @@ export default Ember.TextArea.extend(EditorAPI, EditorShortcuts, EditorScroll, {
 
                 latestUpload.complete(result);
                 self.set('value', self.get('value').replace('![uploading...]', '![' + filename + ']'));
-                latestUpload.complete(result);
-                self.set('value', self.get('value').replace('![uploading...]', '![' + filename + ']'));
             }
         });
     }.on('didInsertElement'),

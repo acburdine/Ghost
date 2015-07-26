@@ -129,7 +129,7 @@ var EditorAPI = Ember.Mixin.create({
 
         $textarea.focus();
         // Tell the editor it has changed, as programmatic replacements won't trigger this automatically
-        this.sendAction('onChange');
+        this.set('value', $textarea.val());
     }
 });
 
