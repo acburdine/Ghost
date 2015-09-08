@@ -114,7 +114,11 @@ export default Ember.TextArea.extend(EditorAPI, EditorShortcuts, EditorScroll, {
                 self.set('value', self.get('value').replace('![uploading...]', '![' + filename + ']'));
             }
         });
-    }.on('didInsertElement'),
+    },
+
+    didInsertElement: function() {
+        this.attachFileHandler();
+    },
 
     /**
      * Reenable editing in the textarea
