@@ -34,6 +34,8 @@ export default Ember.TextArea.extend(EditorAPI, EditorShortcuts, EditorScroll, {
 
         this.sendAction('setEditor', this);
 
+        this.attachFileHandler();
+
         Ember.run.scheduleOnce('afterRender', this, this.afterRenderEvent);
     },
 
@@ -114,10 +116,6 @@ export default Ember.TextArea.extend(EditorAPI, EditorShortcuts, EditorScroll, {
                 self.set('value', self.get('value').replace('![uploading...]', '![' + filename + ']'));
             }
         });
-    },
-
-    didInsertElement: function() {
-        this.attachFileHandler();
     },
 
     /**
