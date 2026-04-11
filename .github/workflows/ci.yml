@@ -97,6 +97,10 @@ jobs:
               - 'package.json'
               - 'pnpm-lock.yaml'
               - 'pnpm-workspace.yaml'
+            ci:
+              - '.github/workflows/**'
+              - '.github/actions/**'
+              - '.github/scripts/**'
             core:
               - *shared
               - 'ghost/**'
@@ -172,15 +176,23 @@ jobs:
       - name: Determine Affected Projects
         id: affected
         run: |
-          AFFECTED_PROJECTS=$(pnpm -s nx show projects --affected --json | tr -d '\n')
+          # if the ci files have changed, ensure we don't just look at affected
+          # projects and we run the necessary jobs on all projects
+          AFFECTED_ARG="--affected"
+          if [ "${{ steps.changed.outputs.ci }}" == 'true' ]; then
+            AFFECTED_ARG=""
+          fi
+
+          AFFECTED_PROJECTS=$(pnpm -s nx show projects ${AFFECTED_ARG} --json | tr -d '\n')
           echo "affected_projects=$AFFECTED_PROJECTS" >> "$GITHUB_OUTPUT"
 
-          I18N_PROJECTS=$(pnpm -s nx show projects --affected --projects 'tag:i18n' --sep=, | tr -d '\n')
+          I18N_PROJECTS=$(pnpm -s nx show projects ${AFFECTED_ARG} --projects 'tag:i18n' --sep=, | tr -d '\n')
           echo "affected_i18n_projects=${I18N_PROJECTS}" >> "$GITHUB_OUTPUT"
 
     outputs:
       affected_projects: ${{ steps.affected.outputs.affected_projects }}
       changed_i18n_apps: ${{ steps.affected.outputs.affected_i18n_projects != '' }}
+      changed_ci: ${{ steps.changed.outputs.ci }}
       changed_core: ${{ steps.changed.outputs.core }}
       changed_admin_x_settings: ${{ steps.changed.outputs.admin-x-settings }}
       changed_activitypub: ${{ steps.changed.outputs.activitypub }}
